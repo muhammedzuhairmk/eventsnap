@@ -457,3 +457,46 @@ To run the project, use the following commands:
     }
 }
 ```
+
+
+
+#### Approve Image of event - ADMIN
+
+-   **Endpoint:** `/api/v1/admin/event/:id/:image_id`
+-   **Method:** `PATCH`
+-   **Authorization:** `Bearer token.....`
+
+##### Expected Response
+
+```json
+{
+    "status": "success",
+    "data": {
+        "_id": "65c03080b7a80f70d64903fd",
+        "title": "nummm",
+        "description": "this is new desc",
+        "eventDate": "2024-06-01T18:30:00.000Z",
+        "location": "Nilambur",
+        "user": {
+            "_id": "65bfed1319d45f6b009c74b4",
+            "name": "test user 123",
+            "email": "test123@email.com",
+            "phoneNumber": 9000090000,
+            "admissionNumber": 23456,
+            "admissionYear": 2000,
+            "role": "user"
+        },
+        "isApproved": true,
+        "isRejected": false,
+        "images": [
+            {
+                "isApproved": true,
+                "image": "/public/images/event/images-1707094144399-680279258.jpg",
+                "_id": "65c03080b7a80f70d64903fe"
+            }
+        ],
+        "createdAt": "2024-02-05T00:49:04.417Z",
+        "updatedAt": "2024-02-05T00:49:04.417Z"
+    }
+}
+```
