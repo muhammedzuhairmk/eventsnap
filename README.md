@@ -288,3 +288,92 @@ To run the project, use the following commands:
     }
 }
 ```
+
+### ADMIN EVENT MODULE
+
+#### Event Creation - ADMIN
+
+-   **Endpoint:** `/api/v1/admin/event/create`
+-   **Method:** `POST`
+-   **Authorization:** `Bearer token.....`
+
+##### Request Body
+
+```json
+{
+    "title": "test user 2",
+    "description": "test2@email.com",
+    "eventDate": "1234",
+    "location": "1234",
+    "images": "image.png, image.jpg" // mutliple images can be sent
+}
+```
+
+-   Maximum images can upload is : `8`
+-   Image format can be : `jpg, jpeg, webp, or png`
+
+##### Expected Response
+
+```json
+{
+    "status": "success",
+    "data": {
+        "title": "nummm",
+        "description": "this is new desc",
+        "eventDate": "2024-06-01T18:30:00.000Z",
+        "location": "Nilambur",
+        "user": "65bfed1319d45f6b009c74b4",
+        "isApproved": true,
+        "isRejected": false,
+        "images": [
+            {
+                "isApproved": true,
+                "image": "/public/images/event/images-1707094144399-680279258.jpg",
+                "_id": "65c03080b7a80f70d64903fe"
+            }
+        ],
+        "_id": "65c03080b7a80f70d64903fd",
+        "createdAt": "2024-02-05T00:49:04.417Z",
+        "updatedAt": "2024-02-05T00:49:04.417Z",
+        "__v": 0
+    }
+}
+```
+
+
+#### Event View - ADMIN
+
+-   **Endpoint:** `/api/v1/admin/event/`
+-   **Method:** `GET`
+-   **Authorization:** `Bearer token.....`
+-   **Queries for filter:** `?title=give-title&date=01/01/2024`
+
+##### Expected Response
+
+```json
+{
+    "status": "success",
+    "data": [
+        {
+            "_id": "65c03080b7a80f70d64903fd",
+            "title": "nummm",
+            "eventDate": "2024-06-01T18:30:00.000Z",
+            "location": "Nilambur",
+            "user": {
+                "_id": "65bfed1319d45f6b009c74b4",
+                "name": "test user 123"
+            },
+            "images": [
+                {
+                    "isApproved": false,
+                    "image": "/public/images/event/images-1707094144399-680279258.jpg",
+                    "_id": "65c03080b7a80f70d64903fe"
+                }
+            ]
+        },
+        {......}
+    ]
+}
+
+```
+
