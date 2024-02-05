@@ -39,7 +39,7 @@ module.exports = {
         const { title, date } = req.query;
 
         let query = {
-            isApproved: false,
+            isApproved: true,
             eventDate: { $gte: new Date() },
         };
 
