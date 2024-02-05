@@ -35,5 +35,6 @@ const upload = multer({
 
 router.post("/create", authorize, upload, eventController.addEvent);
 router.get("/", authorize, eventController.viewEvents);
+router.get("/:id", authorize, eventController.viewSingleEvent);
 
 module.exports = router;

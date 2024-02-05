@@ -70,6 +70,28 @@ module.exports = {
         });
     }),
 
+    viewSingleEvent: catchAsyncError(async (req, res, next) => {
+        const { id } = req.params;
+
+        if (!isValidObjectId(id)) {
+            return next(new AppError("Invalid event. Please try again", 400));
+        }
+
+        const event = await Event.findById(id).select("-__v").populate({
+            path: "user",
+            select: "-__v -updatedAt -createdAt -avatar",
+        });
+
+        if (!event) {
+            return next(new AppError("No events found", 400));
+        }
+
+        res.status(200).json({
+            status: "success",
+            data: event,
+        });
+    }),
+
     updateEvent: catchAsyncError(async (req, res, next) => {
         const { id } = req.params;
 
