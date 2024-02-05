@@ -56,8 +56,6 @@ module.exports = {
             query.eventDate = { $gte: new Date(date) };
         }
 
-        console.log(query);
-
         const events = await Event.find(query)
             .select("title eventDate location images user")
             .populate({
