@@ -18,7 +18,6 @@ module.exports = catchAsyncError(async (req, res, next) => {
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
     const user = await User.findById(decoded.id);
-    console.log("psl");
 
     if (!user) {
         return next(new AppError("The token belonging to this user doesnot exist.", 401));

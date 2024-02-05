@@ -34,5 +34,6 @@ const upload = multer({
 }).fields([{ name: "images", maxCount: 8 }]);
 
 router.post("/create", authorize, upload, eventController.addEvent);
+router.get("/", authorize, eventController.viewEvents);
 
 module.exports = router;

@@ -2,6 +2,7 @@ const catchAsyncError = require("../utils/catchAsyncError");
 const Event = require("../models/event.model");
 const AppError = require("../utils/appError");
 const { createEventSchema } = require("../validations/event.schema");
+const { isValidObjectId } = require("mongoose");
 
 module.exports = {
     addEvent: catchAsyncError(async (req, res, next) => {
@@ -31,6 +32,54 @@ module.exports = {
         res.status(201).json({
             status: "success",
             data: event,
+        });
+    }),
+
+    viewEvents: catchAsyncError(async (req, res, next) => {
+        const { title, date } = req.query;
+
+        let query = {
+            isApproved: false,
+            eventDate: { $gte: new Date() },
+        };
+
+        if (title) {
+            query.title = { $regex: new RegExp(title, "i") };
+        }
+
+        if (date) {
+            query.eventDate = { $gte: new Date(date) };
+        }
+
+        const events = await Event.find(query)
+            .select("title eventDate location images user")
+            .populate({
+                path: "user",
+                select: "name",
+            })
+            .sort({ eventDate: 1 })
+            .exec();
+
+        if (!events || events.length === 0) {
+            return next(new AppError("No events found", 400));
+        }
+
+        res.status(200).json({
+            status: "success",
+            data: events,
+        });
+    }),
+
+    updateEvent: catchAsyncError(async (req, res, next) => {
+        const { id } = req.params;
+
+        if (!isValidObjectId(id)) {
+            return next(new AppError("Invalid event. Please try again", 400));
+        }
+
+        res.status(200).json({
+            status: "success",
+            data: "event",
         });
     }),
 };
