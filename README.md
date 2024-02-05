@@ -1,30 +1,33 @@
-## Project Name: Event Snap
+# Project Name: Event Snap
 
 ### Running the Project
 
 To run the project, use the following commands:
 
-- Development Mode: `npm run dev`
-  - This will run the project on port 8000.
+-   Development Mode: `npm run dev`
 
-- Production Mode: `npm run start`
-  - This will run the project in production mode.
+    -   This will run the project on port 8000.
 
-### API Endpoints
+-   Production Mode: `npm run start`
+    -   This will run the project in production mode.
+
+## API Endpoints
+
+### USER MODULE
 
 #### User Registration
 
-- **Endpoint:** `/api/v1/user/signup`
-- **Method:** `POST`
+-   **Endpoint:** `/api/v1/user/signup`
+-   **Method:** `POST`
 
 ##### Request Body
 
 ```json
 {
-  "name": "test user 2",
-  "email": "test2@email.com",
-  "password": "1234",
-  "confirmPassword": "1234"
+    "name": "test user 2",
+    "email": "test2@email.com",
+    "password": "1234",
+    "confirmPassword": "1234"
 }
 ```
 
@@ -32,32 +35,31 @@ To run the project, use the following commands:
 
 ```json
 {
-  "status": "success",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "data": {
-    "name": "test user 2",
-    "email": "test2@email.com",
-    "role": "user",
-    "_id": "65bff21d64572263e89af641",
-    "createdAt": "2024-02-04T20:22:53.952Z",
-    "updatedAt": "2024-02-04T20:22:53.952Z",
-    "__v": 0
-  }
+    "status": "success",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "data": {
+        "name": "test user 2",
+        "email": "test2@email.com",
+        "role": "user",
+        "_id": "65bff21d64572263e89af641",
+        "createdAt": "2024-02-04T20:22:53.952Z",
+        "updatedAt": "2024-02-04T20:22:53.952Z",
+        "__v": 0
+    }
 }
 ```
 
-
 #### User Login
 
-- **Endpoint:** `/api/v1/user/signin`
-- **Method:** `POST`
+-   **Endpoint:** `/api/v1/user/signin`
+-   **Method:** `POST`
 
 ##### Request Body
 
 ```json
 {
-  "email": "test2@email.com",
-  "password": "1234",
+    "email": "test2@email.com",
+    "password": "1234"
 }
 ```
 
@@ -79,13 +81,11 @@ To run the project, use the following commands:
 }
 ```
 
+#### Get My User
 
-#### Get My User 
-
-- **Endpoint:** `/api/v1/user/me`
-- **Method:** `GET`
-- **Authorization:** `Bearer token.....`
-
+-   **Endpoint:** `/api/v1/user/me`
+-   **Method:** `GET`
+-   **Authorization:** `Bearer token.....`
 
 ##### Expected Response
 
@@ -107,11 +107,10 @@ To run the project, use the following commands:
 }
 ```
 
-
 #### User Update
 
-- **Endpoint:** `/api/v1/user/me`
-- **Method:** `PATCH`
+-   **Endpoint:** `/api/v1/user/me`
+-   **Method:** `PATCH`
 
 ##### Request Body
 
@@ -147,13 +146,11 @@ To run the project, use the following commands:
 }
 ```
 
+#### Delete My User
 
-#### Delete My User 
-
-- **Endpoint:** `/api/v1/user/me`
-- **Method:** `DELETE`
-- **Authorization:** `Bearer token.....`
-
+-   **Endpoint:** `/api/v1/user/me`
+-   **Method:** `DELETE`
+-   **Authorization:** `Bearer token.....`
 
 ##### Expected Response
 
@@ -162,4 +159,91 @@ To run the project, use the following commands:
     "status": "success",
     "data": "User deleted successfully"
 }
+```
+
+### EVENT MODULE
+
+#### Event Creation - User
+
+-   **Endpoint:** `/api/v1/event/create`
+-   **Method:** `POST`
+-   **Authorization:** `Bearer token.....`
+
+##### Request Body
+
+```json
+{
+    "title": "test user 2",
+    "description": "test2@email.com",
+    "eventDate": "1234",
+    "location": "1234",
+    "images": "image.png, image.jpg" // mutliple images can be sent
+}
+```
+
+-   Maximum images can upload is : `8`
+-   Image format can be : `jpg, jpeg, webp, or png`
+
+##### Expected Response
+
+```json
+{
+    "status": "success",
+    "data": {
+        "title": "nummm",
+        "description": "this is new desc",
+        "eventDate": "2024-06-01T18:30:00.000Z",
+        "location": "Nilambur",
+        "user": "65bfed1319d45f6b009c74b4",
+        "isApproved": false,
+        "isRejected": false,
+        "images": [
+            {
+                "isApproved": false,
+                "image": "/public/images/event/images-1707094144399-680279258.jpg",
+                "_id": "65c03080b7a80f70d64903fe"
+            }
+        ],
+        "_id": "65c03080b7a80f70d64903fd",
+        "createdAt": "2024-02-05T00:49:04.417Z",
+        "updatedAt": "2024-02-05T00:49:04.417Z",
+        "__v": 0
+    }
+}
+```
+
+#### Event View - User
+
+-   **Endpoint:** `/api/v1/event/`
+-   **Method:** `GET`
+-   **Authorization:** `Bearer token.....`
+-   **Queries for filter:** `?title=give-title&date=01/01/2024`
+
+##### Expected Response
+
+```json
+{
+    "status": "success",
+    "data": [
+        {
+            "_id": "65c03080b7a80f70d64903fd",
+            "title": "nummm",
+            "eventDate": "2024-06-01T18:30:00.000Z",
+            "location": "Nilambur",
+            "user": {
+                "_id": "65bfed1319d45f6b009c74b4",
+                "name": "test user 123"
+            },
+            "images": [
+                {
+                    "isApproved": false,
+                    "image": "/public/images/event/images-1707094144399-680279258.jpg",
+                    "_id": "65c03080b7a80f70d64903fe"
+                }
+            ]
+        },
+        {......}
+    ]
+}
+
 ```
